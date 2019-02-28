@@ -1,0 +1,69 @@
+<div class="col-md-2 bootstrap-admin-col-left">
+	 <ul class="nav navbar-collapse collapse bootstrap-admin-navbar-side" id='left_nav'>
+	 <?php  $post_list = explode('/',$_SERVER["REQUEST_URI"]);?>
+		<li <if condition="$post_list[4] eq 'Admin' ">class="active"<else /> </if> >
+			<a href="{:U('Admin/index')}"><i class="glyphicon glyphicon-chevron-right"></i> 首页</a>
+		</li>
+		
+		<li <if condition="$post_list[4] eq 'User' ">class="active"<else /> </if> >
+			<a href="{:U('User/index')}"><i class="glyphicon glyphicon-chevron-right"></i> 用户</a>
+		</li>
+		
+		<li <if condition="$post_list[4] eq 'Comm' ">class="active"<else /> </if> >
+			<a href="{:U('Comm/index')}"><i class="glyphicon glyphicon-chevron-right"></i> 返佣</a>
+		</li>
+		
+		<li <if condition="$post_list[4] eq 'Order' AND  $post_list[5] eq 'index.html'">class="active"<else /> </if> >
+			<a href="{:U('Order/index')}"><i class="glyphicon glyphicon-chevron-right"></i> 充值订单</a>
+		</li>  
+
+		<li <if condition="$post_list[5] eq 'cash.html' ">class="active"<else /> </if> >
+			<a href="{:U('Order/cash')}"><i class="glyphicon glyphicon-chevron-right"></i> 提现订单</a>
+		</li> 		
+	
+		<li <if condition="$post_list[4] eq 'Market' AND $post_list[5] eq 'res'">class="active" <else /> </if> >
+			<a href="{:U('Market/res')}"><i class="glyphicon glyphicon-chevron-right"></i> 比赛开放</a>
+		</li>
+		
+		<li <if condition="$post_list[4] eq 'odd_score' ">class="active"<else /> </if> >
+			<a href="{:U('Market/odd_score')}"><i class="glyphicon glyphicon-chevron-right"></i>比赛赔率&下注设置</a>
+		</li>
+		
+		<li <if condition="$post_list[4] eq 'Mnl' ">class="active"<else /> </if> >			
+		<a href="{:U('Mnl/index')}"><i class="glyphicon glyphicon-chevron-right"></i>手动比赛</a>
+		</li>
+		
+		<li <if condition="$post_list[5] eq 'odd_index.html' ">class="active"<else /> </if> >
+			<a href="{:U('Market/odd_index')}"><i class="glyphicon glyphicon-chevron-right"></i>比赛列表</a>
+		</li>
+		
+		<li <if condition="$post_list[5] eq 'undo_data.html' ">class="active"<else /> </if> >
+			<a href="{:U('Market/undo_data')}"><i class="glyphicon glyphicon-chevron-right"></i> 取消&延期比赛</a>
+		</li>
+		
+		<li <if condition="$post_list[5] eq 'bet.html' ">class="active"<else /> </if> >
+			<a href="{:U('Market/bet')}"><i class="glyphicon glyphicon-chevron-right"></i> 历史下注记录</a>
+		</li>
+		
+		<li <if condition="$post_list[4] eq 'The' ">class="active"<else /> </if> >
+			<a href="{:U('The/index')}"><i class="glyphicon glyphicon-chevron-right"></i> 公告</a>
+		</li>
+		
+		<li <if condition="$post_list[4] eq 'Agent' ">class="active"<else /> </if> >
+			<a href="{:U('Agent/index')}"><i class="glyphicon glyphicon-chevron-right"></i> 代理返佣配置</a>
+		
+		</li>
+		
+		<li <if condition="$post_list[4] eq 'Cont' ">class="active"<else /> </if> >
+			<a href="{:U('Cont/index')}"><i class="glyphicon glyphicon-chevron-right"></i> 系统配置</a>
+		</li>
+		
+		<li <if condition="$post_list[4] eq 'AAdmin' ">class="active"<else /> </if> >
+			<a href="{:U('AAdmin/index')}"><i class="glyphicon glyphicon-chevron-right"></i> 管理员</a>
+		</li>
+	
+	</ul>
+</div>
+	<script>
+		document.getElementById("dropdown_menu").innerHTML = document.getElementById("left_nav").innerHTML;
+	</script>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>顶级用户注册</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="__THEME__/viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Bootstrap -->
+        <link href="__THEME__/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+
+        <!-- Bootstrap Admin Theme -->
+        <link href="__THEME__/css/bootstrap-admin-theme.css" rel="stylesheet" media="screen">
+
+        <!-- Vendors -->
+        <link href="__THEME__/vendors/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/datepicker.fixes.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/vendors/uniform/themes/default/css/uniform.default.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/uniform.default.fixes.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/vendors/chosen.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/stylesheets/bootstrap-wysihtml5/core-b3.css" rel="stylesheet" media="screen">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+           <script type="text/javascript" src="js/html5shiv.js"></script>
+           <script type="text/javascript" src="js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="bootstrap-admin-with-small-navbar">
+       <div class="container">
+            <!-- left, vertical navbar & content -->
+            <div class="row">
+                <!-- left, vertical navbar -->
+                <include file="Public/nav" />
+
+            <!-- left, vertical navbar & content -->
+            <div class="row">
+                <!-- left, vertical navbar -->
+            <include file="Public/left" /> 
+			 
+			<block name="container"></block>
+
+
+       
+
+                <!-- content -->
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="panel panel-default bootstrap-admin-no-table-panel">
+                            <div class="panel-heading">
+                                <div class="text-muted bootstrap-admin-box-title">顶级用户注册</div>
+                            </div>
+                            <div class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
+                                <form class="form-horizontal" method="post" action="{:U('User/add')}" >
+                                    <fieldset>
+                                        <legend>顶级用户注册</legend>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label" for="focusedInput">手机号</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="user" id="focusedInput" maxlength="11" type="text" onkeyup="this.value=this.value.replace(/[^\d]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') ">
+                                            </div>
+                                        </div>
+										<div class="form-group">
+                                            <label class="col-lg-2 control-label">登陆密码</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control disabled" name="password" maxlength="22" id="disabledInput" type="password"  >
+                                            </div>
+                                        </div>
+										<div class="form-group">
+                                            <label class="col-lg-2 control-label">二级密码</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control disabled" name="trade_password" maxlength="8" id="disabledInput" type="password" onkeyup="this.value=this.value.replace(/[^\d]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " >
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-success">
+                                            <label class="col-lg-2 control-label" for="inputError">银行代码</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" name="bank_name" id="inputSuccess" class="form-control">
+                                            </div>
+                                        </div>
+										<div class="form-group has-success">
+                                            <label class="col-lg-2 control-label" for="inputError">支行代码</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" name="bank_adress" id="inputSuccess" class="form-control">
+                                            </div>
+                                        </div>
+										<div class="form-group has-success">
+                                            <label class="col-lg-2 control-label" for="inputError">开户人姓名</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" name="name" id="inputSuccess" class="form-control">
+                                            </div>
+                                        </div>
+										<div class="form-group has-success">
+                                            <label class="col-lg-2 control-label" for="inputError">银行卡号</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" name="bank_number" id="inputSuccess" class="form-control">
+                                            </div>
+                                        </div>
+										<input type="hidden" name="state" value="1">
+                                        <button type="submit" class="btn btn-primary">提  交</button>
+                                        <button type="reset" onclick="javascript:history.back(-1);"  class="btn btn-default">上一页</button>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="__THEME__/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="__THEME__/js/twitter-bootstrap-hover-dropdown.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/uniform/jquery.uniform.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/chosen.jquery.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/javascripts/bootstrap-wysihtml5/wysihtml5.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/javascripts/bootstrap-wysihtml5/core-b3.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/twitter-bootstrap-wizard/jquery.bootstrap.wizard-for.bootstrap3.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/boostrap3-typeahead/bootstrap3-typeahead.min.js"></script>
+
+        <script type="text/javascript">
+            $(function() {
+                $('.datepicker').datepicker();
+                $('.uniform_on').uniform();
+                $('.chzn-select').chosen();
+                $('.textarea-wysihtml5').wysihtml5({
+                    stylesheets: [
+                        'vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/stylesheets/bootstrap-wysihtml5/wysiwyg-color.css'
+                    ]
+                });
+
+                $('#rootwizard').bootstrapWizard({
+                    'nextSelector': '.next',
+                    'previousSelector': '.previous',
+                    onNext: function(tab, navigation, index) {
+                        var $total = navigation.find('li').length;
+                        var $current = index + 1;
+                        var $percent = ($current / $total) * 100;
+                        $('#rootwizard').find('.progress-bar').css('width', $percent + '%');
+                        // If it's the last tab then hide the last button and show the finish instead
+                        if ($current >= $total) {
+                            $('#rootwizard').find('.pager .next').hide();
+                            $('#rootwizard').find('.pager .finish').show();
+                            $('#rootwizard').find('.pager .finish').removeClass('disabled');
+                        } else {
+                            $('#rootwizard').find('.pager .next').show();
+                            $('#rootwizard').find('.pager .finish').hide();
+                        }
+                    },
+                    onPrevious: function(tab, navigation, index) {
+                        var $total = navigation.find('li').length;
+                        var $current = index + 1;
+                        var $percent = ($current / $total) * 100;
+                        $('#rootwizard').find('.progress-bar').css('width', $percent + '%');
+                        // If it's the last tab then hide the last button and show the finish instead
+                        if ($current >= $total) {
+                            $('#rootwizard').find('.pager .next').hide();
+                            $('#rootwizard').find('.pager .finish').show();
+                            $('#rootwizard').find('.pager .finish').removeClass('disabled');
+                        } else {
+                            $('#rootwizard').find('.pager .next').show();
+                            $('#rootwizard').find('.pager .finish').hide();
+                        }
+                    },
+                    onTabShow: function(tab, navigation, index) {
+                        var $total = navigation.find('li').length;
+                        var $current = index + 1;
+                        var $percent = ($current / $total) * 100;
+                        $('#rootwizard').find('.bar').css({width: $percent + '%'});
+                    }
+                });
+                $('#rootwizard .finish').click(function() {
+                    alert('Finished!, Starting over!');
+                    $('#rootwizard').find('a[href*=\'tab1\']').trigger('click');
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PUNK</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Bootstrap -->
+        <link href="__THEME__/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+
+        <!-- Bootstrap Admin Theme -->
+        <link href="__THEME__/css/bootstrap-admin-theme.css" rel="stylesheet" media="screen">
+
+        <!-- Vendors -->
+        <link href="__THEME__/vendors/easypiechart/jquery.easy-pie-chart.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/vendors/easypiechart/jquery.easy-pie-chart_custom.css" rel="stylesheet" media="screen">
+	
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+		
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+           <script type="text/javascript" src="__THEME__/js/html5shiv.js"></script>
+           <script type="text/javascript" src="__THEME__/js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="bootstrap-admin-with-small-navbar">
+
+		<include file="Public/nav" />
+
+		<div class="container">
+            <!-- left, vertical navbar & content -->
+            <div class="row">
+                <!-- left, vertical navbar -->
+            <include file="Public/left" /> 
+			 
+			<block name="container"></block>
+		
+		   </div>
+
+        </div>
+
+
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script type="text/javascript" src="__THEME__/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="__THEME__/js/twitter-bootstrap-hover-dropdown.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/easypiechart/jquery.easy-pie-chart.js"></script>
+
+        <script type="text/javascript">
+            $(function() {
+                // Easy pie charts
+                $('.easyPieChart').easyPieChart({animate: 1000});
+            });
+        </script>
+		
+		
+		
+		
+		<!-- /*  2017-08-01 
+	建军节快乐
+	
+          __     __       
+         /  \~~~/  \    
+   ,----(     ..    ) 
+  /      \__     __/   
+ /|         (\  |(
+^ \   /___\  /\ |   
+   |__|   |__|-" 
+   
+   增加提现 提示
+*/ -->
+	<link rel="stylesheet" type="text/css" href="__COMMON__/notice/css/ns-default.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="__COMMON__/notice/css/ns-style-bar.css" /> -->
+	<link rel="stylesheet" type="text/css" href="__COMMON__/notice/css/ns-style-other.css" />
+	<script src="__COMMON__/notice/js/modernizr.custom.js"></script>
+
+	<div style="display:none;">
+		<audio id="audio_notice"  controls="controls" loop="loop" volume="1" src="__COMMON__/notice/music/1.mp3"></audio>
+
+		<div id="notice_bar"><span class="icon icon-megaphone"></span><p>你有新的提现订单<br/>点击 <a href="{:U('Order/cash')}">查看</a></p></div>
+		
+		<button id="notification-trigger" class="progress-button">
+				<span class="content">显示提示框</span>
+				<span class="progress"></span>
+		</button>	
+	</div>
+
+	<script src="__COMMON__/notice/js/classie.js"></script>
+	<script src="__COMMON__/notice/js/notificationFx.js"></script>
+	<if condition="$cash_notice neq true">
+	<script>
+		(function() {
+			var bttn = document.getElementById( 'notification-trigger' );
+
+			// make sure..
+			bttn.disabled = false;
+
+			var message_notice = document.getElementById("notice_bar").innerHTML;					
+				
+			setInterval(function (){
+				$.post(
+					"{:U('Order/get_new_cash')}",
+					function(result){
+						if(result==1){
+							do_notice();
+						}else{
+							document.getElementById("audio_notice").pause();		
+						}
+					}
+				)
+			},10000);		
+			//do_notice();
+			
+			function do_notice(){
+				document.getElementById("audio_notice").play();						
+
+					classie.remove( bttn, 'active' );
+					
+					var message_notice = document.getElementById("notice_bar").innerHTML;
+					
+					// create the notification
+					var notification = new NotificationFx({
+						message : message_notice,
+						layout : 'other',
+						effect : 'cornerexpand',
+						type    : 'notice', 		// notice, warning or error
+						onClose : function() {
+							//bttn.disabled = false;
+						}
+					});
+
+					// show the notification
+					notification.show();
+				
+				// disable the button (for demo purposes only)
+				this.disabled = true;
+			}
+			
+			bttn.addEventListener( 'click', function() {
+				do_notice();
+			} );
+		})();
+	
+		$(".control_volume").click(function(){
+		
+			_volume = document.getElementById("audio_notice").volume;
+			
+			new_volume = 1 - _volume ; 
+			
+			_content = new_volume == 1 ? "关闭声音" : "开启声音";
+			
+			document.getElementById("audio_notice").volume =  new_volume;
+			
+			$(".control_volume").html(_content);
+		}) 
+	</script>
+
+		
+		
+    </body>
+</html>

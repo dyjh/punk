@@ -1,0 +1,245 @@
+<extend name="Public/index" />
+
+
+<block name="container">
+
+	<div class="col-md-10">
+		<!-- <div class="row"> -->
+			<!-- <div class="alert alert-success bootstrap-admin-alert"> -->
+				<!-- <button type="button" class="close" data-dismiss="alert">×</button> -->
+				<!-- <h4>成功</h4> -->
+				<!-- 这里是操作成功提示信息！ -->
+			<!-- </div> -->
+		<!-- </div> -->
+
+
+		<div class="row">
+			<div class="panel panel-default bootstrap-admin-no-table-panel">
+				<div class="panel-heading">
+					<div class="text-muted bootstrap-admin-box-title">统计</div>
+					<!--<div class="pull-right"><span class="badge">查看更多</span></div>-->
+				</div>
+				<div class="bootstrap-admin-panel-content bootstrap-admin-no-table-panel-content collapse in">
+					<div class="col-md-3">
+						<div class="easyPieChart" data-percent="{$arr['Today']/100}" style="width: 110px; height: 110px; line-height: 110px;">{$arr.Today}<canvas width="110" height="110"></canvas></div>
+						<div class="chart-bottom-heading"><span class="label label-info">当日注册人数</span></div>
+					</div>
+					<div class="col-md-3">
+						<div class="easyPieChart" data-percent="{$arr['bate']/100}" style="width: 110px; height: 110px; line-height: 110px;">{$arr.bate}<canvas width="110" height="110"></canvas></div>
+						<div class="chart-bottom-heading"><span class="label label-info">当前投注单数</span></div>
+					</div>
+					<div class="col-md-3">
+						<div class="easyPieChart" data-percent="{$arr['principal']/100}" style="width: 110px; height: 110px; line-height: 110px;">
+						<if condition="$arr['principal'] neq null ">
+						￥{$arr.principal}
+						<else />
+						￥0
+						</if>
+						<canvas width="110" height="110"></canvas></div>
+						<div class="chart-bottom-heading"><span class="label label-info">当日投注总金额</span></div>
+					</div>
+					<div class="col-md-3">
+						<div class="easyPieChart" data-percent="{$arr['money']/100}" style="width: 110px; height: 110px; line-height: 110px;">
+						<if condition="$arr['money'] neq null ">
+						￥{$arr.money}
+						<else />
+						￥0
+						</if>
+						<canvas width="110" height="110"></canvas></div>
+						<div class="chart-bottom-heading"><span class="label label-info">当日提现总金额</span></div>
+					</div>
+				</div>
+				
+				<div class="bootstrap-admin-panel-content bootstrap-admin-no-table-panel-content collapse in">
+					<div class="col-md-3">
+						<div class="easyPieChart" data-percent="100" style="width: 110px; height: 110px; line-height: 110px;">{$arr.History}<canvas width="110" height="110"></canvas></div>
+						<div class="chart-bottom-heading"><span class="label label-danger">历史注册总人数</span></div>
+					</div>
+					<div class="col-md-3">
+						<div class="easyPieChart" data-percent="100" style="width: 110px; height: 110px; line-height: 110px;">{$arr.bate_num}<canvas width="110" height="110"></canvas></div>
+						<div class="chart-bottom-heading"><span class="label label-danger">历史投注总单数</span></div>
+					</div>
+					<div class="col-md-3">
+					<div class="easyPieChart" data-percent="100" style="width: 110px; height: 110px; line-height: 110px;">
+					<if condition="$arr['principal_num'] neq null ">
+						￥{$arr.principal_num}
+						<else />
+						￥0
+					</if>
+					<canvas width="110" height="110"></canvas></div>
+						<div class="chart-bottom-heading"><span class="label label-danger">历史投注总金额</span></div>
+					</div>
+					<div class="col-md-3">
+						<div class="easyPieChart" data-percent="100" style="width: 110px; height: 110px; line-height: 110px;">
+						<if condition="$arr['money_num'] neq null ">
+						￥{$arr.money_num}
+						<else />
+						￥0
+					</if>
+						<canvas width="110" height="110"></canvas></div>
+						<div class="chart-bottom-heading"><span class="label label-danger">历史提现总金额</span></div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		<div class="row">
+
+                        <div class="panel panel-default bootstrap-admin-no-table-panel">
+
+                            <div class="panel-heading">
+
+                                <div class="text-muted bootstrap-admin-box-title">盈亏统计</div>
+
+                            </div>
+
+                            <div class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
+
+                                <div id="rootwizard">
+
+                                    <div class="navbar">
+
+                                        <div class="container">
+
+                                            <ul>
+
+                                                <li class="btn btn-primary">选择时间</li>
+
+                                            </ul>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div>
+
+                                        <div>
+
+                                            <form class="form-horizontal" action="{:U('Admin/index_stat')}" method="get">
+
+                                                <fieldset>
+
+	<div class="input-group" style="float: left; width: 40%;">
+
+		<input value="{$start_time|date='Y-m-d',###}" type="text" id="start" name="start_time" class="form-control" placeholder="请输入你要查询的开始时间">
+
+	</div>
+
+	
+
+	<div class="input-group" style="float: left; width: 40%;">
+
+		<input value="{$end_time|date='Y-m-d',###}"   type="text" id="end"   name="end_time"   class="form-control" placeholder="请输入你要查询的结束时间">
+
+	</div>
+
+	<br/>
+
+	<br/>
+
+	<br/>
+
+	<button type="submit" class="btn btn-default">查询</button></div>
+
+                                                </fieldset>
+
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+		
+
+	</div>
+        
+
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+
+<script type="text/javascript" src="__THEME__/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__THEME__/js/twitter-bootstrap-hover-dropdown.min.js"></script>
+
+<script type="text/javascript" src="__THEME__/js/laydate.js" ></script>
+
+<script type="text/javascript" src="__THEME__/vendors/uniform/jquery.uniform.min.js"></script>
+
+<script type="text/javascript" src="__THEME__/vendors/chosen.jquery.min.js"></script>
+
+<script type="text/javascript" src="__THEME__/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript" src="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/javascripts/bootstrap-wysihtml5/wysihtml5.js"></script>
+
+<script type="text/javascript" src="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/javascripts/bootstrap-wysihtml5/core-b3.js"></script>
+
+<script type="text/javascript" src="__THEME__/vendors/twitter-bootstrap-wizard/jquery.bootstrap.wizard-for.bootstrap3.js"></script>
+
+<script type="text/javascript" src="__THEME__/vendors/boostrap3-typeahead/bootstrap3-typeahead.min.js"></script>
+
+
+
+        <script type="text/javascript">
+
+		
+
+			
+
+		var start = {
+
+		  elem: '#start',
+
+		  format: 'YYYY/MM/DD hh:mm:ss',
+
+		  min: '1099-06-16 23:59:59', //设定最小日期为当前日期
+
+		  max: '2099-06-16 23:59:59', //最大日期
+
+		  istime: true,
+
+		  istoday: false,
+
+		  choose: function(datas){
+
+			 end.min = datas; //开始日选好后，重置结束日的最小日期
+
+			 end.start = datas //将结束日的初始值设定为开始日
+
+		  }
+
+		};
+
+		var end = {
+
+		  elem: '#end',
+
+		  format: 'YYYY/MM/DD hh:mm:ss',
+
+		  min: '1099-06-16 23:59:59',
+
+		  max: '2099-06-16 23:59:59',
+
+		  istime: true,
+
+		  istoday: false,
+
+		  choose: function(datas){
+
+			start.max = datas; //结束日选好后，重置开始日的最大日期
+
+		  }
+
+		};
+
+		laydate(start);
+  
+		laydate(end);
+
+</script>
+</block>

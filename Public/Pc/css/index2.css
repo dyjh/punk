@@ -1,0 +1,165 @@
+
+.marked-list-body{
+	float: left;
+    height: 83%;
+    margin-top: 6%;
+    width: 100%;
+    display: none;
+
+}
+.marked-list-body1{
+	display: block;
+}
+
+.marked-list:nth-child(1){
+	margin-top: 0;
+}
+.marked-list:last-child{
+	margin-bottom: 5%;
+} 
+.marked-list{
+	/*border-left: 3px solid red;*/
+	float: left;
+	height: 80px;
+	width: 97%;
+	background: #fff;
+	margin-top: 5%;
+	margin-left: 1%;
+	box-shadow:3px 3px 1px #a6a6a6;
+}
+.list-head{
+	float: left;
+	height: 30%;
+	width: 100%;
+	color: #727272;
+}
+.marked-head-time{
+	float: left;
+	height: 100%;
+	width: 45%;
+}
+.marked-head-name{
+	float: left;
+	height: 100%;
+	width: 55%;
+}
+.marked-head-time span{
+	font-size: 1rem;
+    font-weight: bold;
+    display: inline-block;
+    text-indent: 10%;
+    margin-top: 2%;
+}
+.marked-head-name span{
+	font-size: 1rem;
+	display: inline-block;
+    margin-top: 5%;
+}
+.box-span-width{
+	float: left;
+    width: 42%;
+   	text-overflow : ellipsis;
+    text-align: center;
+}
+.list-detail{
+	height: auto;
+}
+.marked-list-box{
+	float: left;
+	height: 70%;
+	width: 100%;
+}
+.marked-list-box .marked-return{
+	width: 9%;
+    height: 143%;
+    position: absolute;
+    top: -43%;
+    left: -10%;
+    background: #E1E1E1;
+
+}
+.marked-list-box .marked-return img{
+	margin-top: 85%;
+	height: 28px;
+	width: 28px;
+}
+.list-box{
+	float: left;
+	height: 100%;
+	width: 7%;
+	margin-left: 1%;
+	text-align: center;
+	
+}
+.list-box:nth-child(1){
+	margin-left: 10%;
+}
+.list-box img{
+	width: 26px;
+	height: 26px;
+	margin-top: 5%;
+}
+.list-box-span span{
+	margin-top: 6%;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	color: #070707;
+}
+.list-box .right-arrow{
+	width: 11px;
+	height: 11px;
+	margin-top: 85%;
+}
+.list-box-a{
+	background: #ddd;
+}
+
+
+.msg-list-box{
+	float: left;
+	height: auto;
+	width: 100%;
+}
+
+.list-box-a{
+	float: left;
+	width: 100%;
+	/*margin-bottom: 0.3%;	*/
+	display: table-row;
+	border-bottom: 1px solid #ddd;
+	background: #fff;
+}
+.list-box-a .list-box-text span{
+	padding: 15px;
+    display: inline-block;
+}
+.list-box-a:last-child{
+	margin-bottom: 5%;
+}
+.list-box-text{
+	float: left;
+    height: 100%;
+    width: 32.9%;
+    /*margin-left: 0.3%;*/
+   border-left: 1px solid #ddd;
+   text-align: center;
+   background: #ffffff;
+   display: table-cell;
+}
+.list-box-text span{
+	font-size: 1.4rem;
+	color: #56585A;
+	font-weight: bold;
+}
+
+.list-box-a:nth-of-type(even) .list-box-text{
+	background: #EDF7FF;
+}
+.list-box-text:nth-of-type(even) span{
+	color: #f00;
+}
+.list-box-a:nth-of-type(even){
+	background: #EDF7FF;
+}
+

@@ -1,0 +1,61 @@
+<div class="row" >
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="text-muted bootstrap-admin-box-title">{$order_tyoe}订单列表</div>
+			</div>
+		</div>
+
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="text-muted bootstrap-admin-box-title">订单筛选</div>
+				</div>
+				<div class="bootstrap-admin-panel-content">
+					<div>
+						<div id="button_operate">
+							<button class="btn btn-default tooltip-right <?php if($get_data['state']=="all_list"||$get_data['state']==""){?>btn-primary<?php }?>" data-con="all_list" data-original-title="Tooltip in right" >全部</button>
+							<button class="btn btn-default tooltip-right <?php if($get_data['state']=="complete"){?>btn-primary<?php }?>" data-con="complete" data-original-title="Tooltip in right" >已完成</button>
+							<button class="btn btn-default tooltip-right <?php if($get_data['state']=="not_comp"){?>btn-primary<?php }?>" data-con="not_comp" data-original-title="Tooltip in right" >未完成</button>				
+							<if condition="$is_export">			
+								<button class="btn btn-default tooltip-right <?php if($get_data['state']=="wait_order"){?>btn-primary<?php }?>" data-con="wait_order" data-original-title="Tooltip in right" >已申请</button>				
+								<button class="btn btn-default tooltip-right <?php if($get_data['state']=="not_ok"){?>btn-primary<?php }?>" data-con="not_ok" data-original-title="Tooltip in right" >提现失败</button>				
+							</if>
+						</div>
+					</div>
+					
+				</div>
+				<div class="bootstrap-admin-panel-content form-group">
+					<div class="col-lg-3 navbar-form">
+						<input value="{$get_data.start_time}" type="text" id="start" name="start_time" class="form-control" placeholder="请输入你要查询的开始时间">
+					</div>
+					<div class="col-lg-3 navbar-form">
+						<input value="{$get_data.end_time}"   type="text" id="end"   name="end_time"   class="form-control" placeholder="请输入你要查询的结束时间">
+					</div>
+				
+					<div class="col-lg-3 navbar-form">
+						<input value="{$get_data.phone}" onblur="ajax_get_info_list('phone',this.value)" type="text"  name="phone" class="form-control" placeholder="请输入你要查询的用户手机">
+					</div>
+					<div class="col-lg-3 navbar-form">
+						<input value="{$get_data.order}" onblur="ajax_get_info_list('order',this.value)" type="text"  name="order" class="form-control" placeholder="请输入你要查询的订单编号">
+					</div>
+					<div style="clear:both;"></div>
+				</div>
+				
+				<if condition="$pay_method">
+				<div class="navbar-form">
+					<label class="col-lg-2 control-label" for="select01">充值方式</label>
+					<div class="col-lg-10">
+						<select id="select01" class="chzn-select" style="width: 150px">
+							<option value=''>全部</option>
+							<option value='alipay'>支付宝</option>
+							<option value='linebank'>银联支付</option>
+							<option value='qqwap'>QQ钱包</option>
+							<option value='qq'>QQ扫码</option>
+						</select>
+					</div>
+				</div>
+				</if>
+				<div style="clear:both;"></div>
+			</div>
+		</div>	
+	</div>

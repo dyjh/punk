@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>人工口金额</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Bootstrap -->
+        <link href="__THEME__/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+
+        <!-- Bootstrap Admin Theme -->
+        <link href="__THEME__/css/bootstrap-admin-theme.css" rel="stylesheet" media="screen">
+
+        <!-- Datatables -->
+        <link href="__THEME__/css/DT_bootstrap.css" rel="stylesheet" media="screen">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+           <script type="text/javascript" src="js/html5shiv.js"></script>
+           <script type="text/javascript" src="js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="bootstrap-admin-with-small-navbar">
+        <div class="container">
+            <!-- left, vertical navbar & content -->
+            <div class="row">
+                <!-- left, vertical navbar -->
+                <include file="Public/nav" />
+
+            <!-- left, vertical navbar & content -->
+            <div class="row">
+                <!-- left, vertical navbar -->
+            <include file="Public/left" /> 
+			 
+			<block name="container"></block>
+
+
+                <!-- content -->
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="text-muted bootstrap-admin-box-title">手动扣剩余金额</div>
+                            </div>
+                            <div class="bootstrap-admin-panel-content">
+								<h1>比赛ID：{$game_id}<small>比分：{$score}</small></h1>
+								<if condition="$type eq 0">
+									<div>类型：全场</div>
+								<elseif condition="$type eq 1"/>
+									<div>类型：半场</div>
+								<elseif condition="$type eq 2"/>
+									<div>类型：进球数</div>
+								</if>
+								
+                                <form method="post" action="{:U('Market/dec_money')}" onsubmit="return check()">
+									<input type="hidden" name="type" value="{$type}"/>
+									<input type="hidden" name="game_id" value="{$game_id}"/>
+									<input type="hidden" name="score" value="{$score}"/>
+									<input type="hidden" name="max_money" value="{$max}"/>
+									<input type="text" name="money" placeholder="最大金额为{$max}" value=""/>
+									<input type="submit" value="提交" style="background-color:green; color:white; border:none; border-radius:5%;width: 100px;
+    height: 28px;"/>
+									<a href="{:U('Market/odd_list',array('id'=>$game_id))}">返回上个页面</a>
+								</form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <hr>
+                <footer role="contentinfo">
+                </footer>
+            </div>
+        </div>
+
+        <<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="__THEME__/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="__THEME__/js/twitter-bootstrap-hover-dropdown.min.js"></script>
+		<script type="text/javascript" src="__THEME__/js/laydate.js" ></script>
+        <script type="text/javascript" src="__THEME__/vendors/uniform/jquery.uniform.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/chosen.jquery.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/javascripts/bootstrap-wysihtml5/wysihtml5.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/javascripts/bootstrap-wysihtml5/core-b3.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/twitter-bootstrap-wizard/jquery.bootstrap.wizard-for.bootstrap3.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/boostrap3-typeahead/bootstrap3-typeahead.min.js"></script>
+    </body>
+</html>
+<script>
+		function check(){
+			if($("input[name='money']").val()==''){
+				alert('金额不能为空');
+				return false;
+			}
+			var max_money=$("input[name='max_money']").val();
+			if($("input[name='money']").val()>=max_money){
+				alert('最大金额不能超过'+max_money);
+				return false;
+			}
+		}
+</script>

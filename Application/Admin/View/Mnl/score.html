@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><if condition="$ge['type'] eq 1 ">半场比分设置<else />全场比分设置</if></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="__THEME__/viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Bootstrap -->
+        <link href="__THEME__/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+
+        <!-- Bootstrap Admin Theme -->
+        <link href="__THEME__/css/bootstrap-admin-theme.css" rel="stylesheet" media="screen">
+
+        <!-- Vendors -->
+        <link href="__THEME__/vendors/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/datepicker.fixes.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/vendors/uniform/themes/default/css/uniform.default.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/uniform.default.fixes.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/vendors/chosen.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/stylesheets/bootstrap-wysihtml5/core-b3.css" rel="stylesheet" media="screen">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+           <script type="text/javascript" src="js/html5shiv.js"></script>
+           <script type="text/javascript" src="js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="bootstrap-admin-with-small-navbar">
+       <div class="container">
+            <!-- left, vertical navbar & content -->
+            <div class="row">
+                <!-- left, vertical navbar -->
+                <include file="Public/nav" />
+
+            <!-- left, vertical navbar & content -->
+            <div class="row">
+                <!-- left, vertical navbar -->
+            <include file="Public/left" /> 
+			 
+			<block name="container"></block>
+
+
+       
+
+                <!-- content -->
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="panel panel-default bootstrap-admin-no-table-panel">
+                            <div class="panel-heading">
+                                <div class="text-muted bootstrap-admin-box-title"><if condition="$ge['type'] eq 1 ">半场比分设置<else />全场比分设置</if></div>
+                            </div>
+                            <div class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
+                                <form class="form-horizontal" method="post" action="{:U('Mnl/score')}" onsubmit='add_ajax({$re.id})' >
+                                    <fieldset>
+                                        <legend><if condition="$ge['type'] eq 1 ">半场比分设置<else />全场比分设置</if></legend>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label" for="focusedInput">场次</label>
+                                            <div class="col-lg-10">
+
+                                                <input class="form-control disabled" id="disabledInput" type="text" placeholder="{$re.team_first}(主)VS{$re.team_second}" disabled="">
+
+                                            </div>
+                                        </div>
+										
+										<div class="form-group">
+                                            <label class="col-lg-2 control-label" for="focusedInput">开场时间</label>
+                                            <div class="col-lg-10">
+
+                                                <input class="form-control disabled" id="disabledInput" type="text" placeholder="{$re.time|date='Y-m-d H:i:s',###}" disabled="">
+
+                                            </div>
+                                        </div>
+										
+										<div class="form-group">
+                                            <label class="col-lg-2 control-label" for="focusedInput">类型</label>
+                                            <div class="col-lg-10">
+
+                                            <select id="{$re.id}"  style='height:41px;' onchange="select({$re.id})">
+
+													<if condition="$ge['type'] eq 1 ">
+													<option value="1">半场</option>
+													<else />
+													<option value="0">全场</option>
+
+													<option value="2">进球数</option>
+													</if>
+												</select>	
+
+                                            </div>
+                                        </div>
+										
+										<div class="form-group">
+                                            <label class="col-lg-2 control-label" for="focusedInput" id="b_title">比分</label>
+                                            <div class="col-lg-10"  id="{$re.id}_z">
+
+                                           <select name="score_1" style='height:41px;'>
+
+												<volist name='score' id='sc'>
+
+												<option value="{$sc.score}">{$sc.score}</option>
+
+												</volist>
+
+												</select>	
+
+                                            </div>
+											
+											<div class="col-lg-10" style="display:none;"  id="{$re.id}_b">
+
+                                             <input type="text" style="width:50px;text-align:center" name='score_2' value=""></td>
+
+                                            </div>
+                                        </div>
+										
+										
+										<input type="hidden" name="id" value="{$ge.id}">
+										<input type="hidden" name="start" value="{$ge.type}">
+                                        <button  type="submit" class="btn btn-primary">提  交</button>
+                                        <button type="reset" onclick="javascript:history.back(-1);"  class="btn btn-default">上一页</button>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="__THEME__/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="__THEME__/js/twitter-bootstrap-hover-dropdown.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/uniform/jquery.uniform.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/chosen.jquery.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/javascripts/bootstrap-wysihtml5/wysihtml5.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/javascripts/bootstrap-wysihtml5/core-b3.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/twitter-bootstrap-wizard/jquery.bootstrap.wizard-for.bootstrap3.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/boostrap3-typeahead/bootstrap3-typeahead.min.js"></script>
+
+        <script type="text/javascript">
+		
+		function select(id){
+
+		     if($('#'+id).val()==2){
+
+			    $('#b_title').text('总球数');
+
+			    $('#'+id+'_z').hide();
+
+			    $('#'+id+'_b').show();	
+
+			 }else{
+
+			    $('#b_title').text('比分');
+
+			    $('#'+id+'_z').show();
+
+			    $('#'+id+'_b').hide();	
+
+			 }			 
+
+		
+
+		}
+
+		function add_ajax(id){
+
+		    if(isNaN($('#'+id).val())){
+
+			    alert('请选择类型');
+
+				return false;
+
+			 }else if($('#odds_'+id).val()== ''){
+
+			    alert('请输入赔率');
+
+				return false;
+
+			 }else if($('#max_moeny_'+id).val()== ''){
+
+			    alert('请输入金额');
+
+				return false;
+
+			 }else{
+			 
+				return false;
+			 
+			 }
+		}
+
+		
+            $(function() {
+                $('.datepicker').datepicker();
+                $('.uniform_on').uniform();
+                $('.chzn-select').chosen();
+                $('.textarea-wysihtml5').wysihtml5({
+                    stylesheets: [
+                        'vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/stylesheets/bootstrap-wysihtml5/wysiwyg-color.css'
+                    ]
+                });
+
+                $('#rootwizard').bootstrapWizard({
+                    'nextSelector': '.next',
+                    'previousSelector': '.previous',
+                    onNext: function(tab, navigation, index) {
+                        var $total = navigation.find('li').length;
+                        var $current = index + 1;
+                        var $percent = ($current / $total) * 100;
+                        $('#rootwizard').find('.progress-bar').css('width', $percent + '%');
+                        // If it's the last tab then hide the last button and show the finish instead
+                        if ($current >= $total) {
+                            $('#rootwizard').find('.pager .next').hide();
+                            $('#rootwizard').find('.pager .finish').show();
+                            $('#rootwizard').find('.pager .finish').removeClass('disabled');
+                        } else {
+                            $('#rootwizard').find('.pager .next').show();
+                            $('#rootwizard').find('.pager .finish').hide();
+                        }
+                    },
+                    onPrevious: function(tab, navigation, index) {
+                        var $total = navigation.find('li').length;
+                        var $current = index + 1;
+                        var $percent = ($current / $total) * 100;
+                        $('#rootwizard').find('.progress-bar').css('width', $percent + '%');
+                        // If it's the last tab then hide the last button and show the finish instead
+                        if ($current >= $total) {
+                            $('#rootwizard').find('.pager .next').hide();
+                            $('#rootwizard').find('.pager .finish').show();
+                            $('#rootwizard').find('.pager .finish').removeClass('disabled');
+                        } else {
+                            $('#rootwizard').find('.pager .next').show();
+                            $('#rootwizard').find('.pager .finish').hide();
+                        }
+                    },
+                    onTabShow: function(tab, navigation, index) {
+                        var $total = navigation.find('li').length;
+                        var $current = index + 1;
+                        var $percent = ($current / $total) * 100;
+                        $('#rootwizard').find('.bar').css({width: $percent + '%'});
+                    }
+                });
+                $('#rootwizard .finish').click(function() {
+                    alert('Finished!, Starting over!');
+                    $('#rootwizard').find('a[href*=\'tab1\']').trigger('click');
+                });
+            });
+        </script>
+    </body>
+</html>

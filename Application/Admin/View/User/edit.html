@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>用户信息</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="__THEME__/viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Bootstrap -->
+        <link href="__THEME__/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+
+        <!-- Bootstrap Admin Theme -->
+        <link href="__THEME__/css/bootstrap-admin-theme.css" rel="stylesheet" media="screen">
+
+        <!-- Vendors -->
+        <link href="__THEME__/vendors/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/datepicker.fixes.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/vendors/uniform/themes/default/css/uniform.default.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/uniform.default.fixes.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/vendors/chosen.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/stylesheets/bootstrap-wysihtml5/core-b3.css" rel="stylesheet" media="screen">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+           <script type="text/javascript" src="js/html5shiv.js"></script>
+           <script type="text/javascript" src="js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="bootstrap-admin-with-small-navbar">
+       <div class="container">
+            <!-- left, vertical navbar & content -->
+            <div class="row">
+                <!-- left, vertical navbar -->
+                <include file="Public/nav" />
+
+            <!-- left, vertical navbar & content -->
+            <div class="row">
+                <!-- left, vertical navbar -->
+            <include file="Public/left" /> 
+			 
+			<block name="container"></block>
+
+
+       
+
+                <!-- content -->
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="panel panel-default bootstrap-admin-no-table-panel">
+                            <div class="panel-heading">
+                                <div class="text-muted bootstrap-admin-box-title">用户信息</div>
+                            </div>
+                            <div class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
+                                <form class="form-horizontal" method="post" action="{:U('User/edit')}" >
+                                    <fieldset>
+                                        <legend>用户详细信息</legend>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label" for="focusedInput">姓名</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control" name="name" id="focusedInput" type="text" value="{$res.name}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 control-label">代理等级</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control disabled" id="disabledInput" type="text" placeholder="无" disabled="">
+                                            </div>
+                                        </div>
+										<div class="form-group">
+                                            <label class="col-lg-2 control-label">账户总金额</label>
+                                            <div class="col-lg-10">
+                                                <input class="form-control disabled" name="all_money" id="disabledInput" type="text" placeholder="￥{$res.all_money}" value='' >
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-success">
+                                            <label class="col-lg-2 control-label" for="inputError">银行代码</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" name="bank_name" id="inputSuccess" class="form-control" value="{$res.bank_name}">
+                                            </div>
+                                        </div>
+										<div class="form-group has-success">
+                                            <label class="col-lg-2 control-label" for="inputError">支行代码</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" name="bank_adress" id="inputSuccess" class="form-control" value="{$res.bank_adress}">
+                                            </div>
+                                        </div>
+										<div class="form-group has-success">
+                                            <label class="col-lg-2 control-label" for="inputError">银行卡号</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" name="bank_number" id="inputSuccess" class="form-control" value="{$res.bank_number}">
+                                            </div>
+                                        </div>
+										<div class="form-group has-warning">
+                                            <label class="col-lg-2 control-label" for="inputError">直推&团队</label>
+                                            <div class="col-lg-10">
+                                                <a class="btn blue" href="{:U('User/team',array('admin_id'=>$res['num_id']))}"><i class="fa fa-pencil-square-o"></i>点击查看详情</a>
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-error">
+                                            <label class="col-lg-2 control-label" for="inputError">注册时间</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" id="inputWarning" class="form-control" value="{$res.regist_time|date='Y-m-d H:i:s',###}" disabled="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-error">
+                                            <label class="col-lg-2 control-label" for="inputError">最近登陆时间</label>
+                                            <div class="col-lg-10">
+                                                <input type="text" id="inputError" class="form-control" value="<if condition="$res['login_time'] neq 0 ">{$res.login_time|date='Y-m-d H:i:s',###}
+													<else />未登陆
+												</if>" disabled="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group has-error">
+                                            <label class="col-lg-2 control-label" for="selectError">账号使用情况</label>
+                                            <div class="col-lg-10">
+                                                <select id="selectError" name="user_titles" class="form-control">
+													 <option value='0'>正常</option>
+                                                    <option value='1'>封停</option>
+                                                </select>
+                                            </div>
+                                        </div>
+										<input type="hidden" name="num_id" value="{$res.num_id}">
+                                        <button type="submit" class="btn btn-primary">提  交</button>
+                                        <button type="reset" onclick="javascript:history.back(-1);"  class="btn btn-default">上一页</button>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="__THEME__/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="__THEME__/js/twitter-bootstrap-hover-dropdown.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/uniform/jquery.uniform.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/chosen.jquery.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/javascripts/bootstrap-wysihtml5/wysihtml5.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/javascripts/bootstrap-wysihtml5/core-b3.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/twitter-bootstrap-wizard/jquery.bootstrap.wizard-for.bootstrap3.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/boostrap3-typeahead/bootstrap3-typeahead.min.js"></script>
+
+        <script type="text/javascript">
+            $(function() {
+                $('.datepicker').datepicker();
+                $('.uniform_on').uniform();
+                $('.chzn-select').chosen();
+                $('.textarea-wysihtml5').wysihtml5({
+                    stylesheets: [
+                        'vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/stylesheets/bootstrap-wysihtml5/wysiwyg-color.css'
+                    ]
+                });
+
+                $('#rootwizard').bootstrapWizard({
+                    'nextSelector': '.next',
+                    'previousSelector': '.previous',
+                    onNext: function(tab, navigation, index) {
+                        var $total = navigation.find('li').length;
+                        var $current = index + 1;
+                        var $percent = ($current / $total) * 100;
+                        $('#rootwizard').find('.progress-bar').css('width', $percent + '%');
+                        // If it's the last tab then hide the last button and show the finish instead
+                        if ($current >= $total) {
+                            $('#rootwizard').find('.pager .next').hide();
+                            $('#rootwizard').find('.pager .finish').show();
+                            $('#rootwizard').find('.pager .finish').removeClass('disabled');
+                        } else {
+                            $('#rootwizard').find('.pager .next').show();
+                            $('#rootwizard').find('.pager .finish').hide();
+                        }
+                    },
+                    onPrevious: function(tab, navigation, index) {
+                        var $total = navigation.find('li').length;
+                        var $current = index + 1;
+                        var $percent = ($current / $total) * 100;
+                        $('#rootwizard').find('.progress-bar').css('width', $percent + '%');
+                        // If it's the last tab then hide the last button and show the finish instead
+                        if ($current >= $total) {
+                            $('#rootwizard').find('.pager .next').hide();
+                            $('#rootwizard').find('.pager .finish').show();
+                            $('#rootwizard').find('.pager .finish').removeClass('disabled');
+                        } else {
+                            $('#rootwizard').find('.pager .next').show();
+                            $('#rootwizard').find('.pager .finish').hide();
+                        }
+                    },
+                    onTabShow: function(tab, navigation, index) {
+                        var $total = navigation.find('li').length;
+                        var $current = index + 1;
+                        var $percent = ($current / $total) * 100;
+                        $('#rootwizard').find('.bar').css({width: $percent + '%'});
+                    }
+                });
+                $('#rootwizard .finish').click(function() {
+                    alert('Finished!, Starting over!');
+                    $('#rootwizard').find('a[href*=\'tab1\']').trigger('click');
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,142 @@
+
+
+<div class="panel-heading">
+	<div class="text-muted bootstrap-admin-box-title">订单统计</div>
+	<div class="pull-right"><span class="badge" onclick="$('.count_table').toggle();"><i class="glyphicon glyphicon-list"></i></span></div>
+</div>
+
+<table style="background-color: #fafafa;border:solid 1px #ddd !important; margin-top: 20px;" class="table count_table">
+	<thead>
+	<tr>
+		<th>总金额</th>
+		<th>总单数</th>
+	</tr>
+	</thead>	
+
+	<tbody>
+	<tr>
+		<td>{$Order.all_money}</td>
+		<td>{$Order.all_count}</td>
+	</tr>
+	</tbody>
+</table>
+
+
+<table style="background-color: #fafafa;border:solid 1px #ddd !important; margin-top: 20px;" class="table count_table">
+	<thead>
+	<tr>
+		<th>已完成订单数</th>
+		<th>未完成订单数</th>
+	</tr>
+	</thead>	
+
+	<tbody>
+	<tr>
+		<td>{$Order.com_count}</td>
+		<td>{$Order.not_count}</td>
+	</tr>
+	</tbody>
+</table>
+
+<table style="background-color: #fafafa;border:solid 1px #ddd !important; margin-top: 20px;" class="table count_table">
+	<thead>
+	<tr>
+		<th>已完成金额</th>
+		<th>未完成金额</th>
+	</tr>
+	</thead>	
+
+	<tbody>
+	<tr>
+		<td>{$Order.com_money}</td>
+		<td>{$Order.not_count}</td>
+	</tr>
+	</tbody>
+</table>
+
+
+ 
+
+<if condition='$order_list'>		
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="content table-responsive table-full-width">									
+					<table class="table table-striped table-hover" style="border:solid 1px #ddd !important;margin-top: 2%;" id="myTable">
+						<thead style="background-color: #fafafa;">
+						 <tr>
+							<th><input type='checkbox' id='check_box'/></th>
+							<th>编号</th>
+							<th>用户手机</th>
+							<th>金额</th>
+							<th>状态</th>
+							<if condition="$is_cash eq 0">	
+								<th>操作</th>
+							</if >
+						</tr>
+						</thead>
+						<tbody id="tbody">
+						  <volist name="order_list" id='val'>
+							<tr id="{$val.order_num}">
+								<td><input type='checkbox' class="_checkbox" name='is_check[]' value="{$val.id}"/></td>
+								<td>{$val.order_num}</td>
+								<td>{$val.user}</td>
+								<td>{$val.money}</td>
+								<td>
+								<if condition="$val['state'] eq 0">
+									未完成
+								<elseif condition="$val['state'] eq 9"/>
+									正在处理	
+									
+									
+								 <elseif condition="$val['state'] eq 1"/>
+									已完成
+									
+									<br/>
+									
+									{$val.confirm_time|date='Y-m-d H:i',###}
+									
+								</if >
+								</td>
+								
+									
+									<td>
+									<if condition="$is_cash eq 0">
+										<if condition="$val['state'] eq 0 && $val['submit_time']+3*24*3660 gt time() ">
+											<button onclick="extract({$val.order_record},{$val.id},'{$val.order_num}',1)" type="button" class="btn tooltip-right btn-success">已经提现<br/>点击完成</button>
+										<elseif condition="$val['state'] eq 1 && $val['confirm_time']+3*24*3660  gt time() "/>
+											<button onclick="extract({$val.order_record},{$val.id},'{$val.order_num}',0)" type="button" class="btn tooltip-right btn-success">提现失败<br/>点击取消</button>
+										</if >
+									</if >	
+									
+									<if condition="$val['confirm_time']+6*60 lt time() && $val['state'] eq 9">
+										<button onclick="refresh_order('{$val.id}','{$val.order_num}','{$val.order_record}')" type="button" class="btn tooltip-right btn-success">刷新</button>
+									</if>
+									
+									<if condition="$val['state'] eq 7">
+										<button onclick="back_money('{$val.id}','{$val.order_num}','{$val.order_record}')" type="button" class="btn tooltip-right btn-success">退回资金</button>
+									</if>
+									
+									</td>
+								
+								
+								
+								
+							</tr>
+						  </volist>
+						</tbody>
+					</table>
+					{$page}
+				</div>
+			</div>
+		</div>
+	</div>	
+<else/>
+	<div class="row">
+		<div class="alert alert-info bootstrap-admin-alert">
+			<!-- <button type="button" class="close" data-dismiss="alert">×</button> -->
+			<!-- <h4>成功</h4> -->
+			暂无订单信息
+		</div>
+	</div>
+</if>

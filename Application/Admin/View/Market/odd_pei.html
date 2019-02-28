@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>赔率%下注</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Bootstrap -->
+        <link href="__THEME__/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+
+        <!-- Bootstrap Admin Theme -->
+        <link href="__THEME__/css/bootstrap-admin-theme.css" rel="stylesheet" media="screen">
+
+        <!-- Datatables -->
+        <link href="__THEME__/css/DT_bootstrap.css" rel="stylesheet" media="screen">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+           <script type="text/javascript" src="js/html5shiv.js"></script>
+           <script type="text/javascript" src="js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="bootstrap-admin-with-small-navbar">
+        <div class="container">
+            <!-- left, vertical navbar & content -->
+            <div class="row">
+                <!-- left, vertical navbar -->
+                <include file="Public/nav" />
+
+            <!-- left, vertical navbar & content -->
+            <div class="row">
+                <!-- left, vertical navbar -->
+            <include file="Public/left" /> 
+			 
+			<block name="container"></block>
+
+
+                <!-- content -->
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="text-muted bootstrap-admin-box-title">赔率情况</div>
+                            </div>
+                            <div class="bootstrap-admin-panel-content">
+                                <table class="table table-striped table-bordered" id="example">
+                                    <thead>
+                                        <tr>
+											<th>场次</th>
+											<th>类型</th>
+                                            <th id="b_title">比分</th>
+                                            <th>赔率 %</th>
+											<th>最大金额</th>
+											<th>该赔率投注量</th>
+											<th>该赔率投注金额</th>
+											<th>该赔率投注剩余金额</th>
+											<th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody> 
+									<volist name='res' id='re'>
+									<form id='form_{$re.id}' method="post">
+                                        <tr class="odd gradeX_{$re.id}">
+                                            <td style="line-height:250%;">{$re.game_id}</td>
+											 <td style="line-height:250%;">
+											<if condition="$re['type'] eq 0 ">
+												<b style="color:red;">全场</b>
+											<elseif condition="$re['type'] eq 1 "/>
+												<b style="color:green;">半场</b>
+											<else /> 
+												<b style="color:#FF4500;">总球数</b>
+											</if></td>
+											<input type="hidden" name="id" value="{$re.id}">
+											 <td style="line-height:250%;">{$re.score}</td>
+											 <td style="line-height:250%;text-align:center;">
+												<input id="odds_{$re['id']}" name="pei" onblur="myFunction({$re['id']})" type="text" value="{$re.pei}" style="width:50px;text-align:center;" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></td>
+											 <td style="line-height:250%;text-align:center;">
+												<input id="max_moeny_{$re['id']}" name="max_money" onblur="myFunction({$re['id']})" type="text" value="{$re['max_money']+$re['sel_money']}" style="width:50px;text-align:center;" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"></td>
+											 <td style="line-height:250%;">{$re.sel_num}</td>
+											 <td style="line-height:250%;"><if condition="$re['sel_money'] eq ''">0<else />{$re.sel_money}</if></td>
+											 <td style="line-height:250%;">{$re['max_money']}</td>
+											 <td style="line-height:250%;">
+											 <a href="{:U('Market/set_odd_list',array('id'=>$re['game_id'],'score'=>$re['score'],'type'=>$re['type']))}">投注情况</a>
+											 
+											 </td>
+                                        </tr>
+									</form>
+									</volist>	
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <hr>
+                <footer role="contentinfo">
+                </footer>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="__THEME__/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="__THEME__/js/twitter-bootstrap-hover-dropdown.min.js"></script>
+		<script type="text/javascript" src="__THEME__/js/laydate.js" ></script>
+        <script type="text/javascript" src="__THEME__/vendors/uniform/jquery.uniform.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/chosen.jquery.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/javascripts/bootstrap-wysihtml5/wysihtml5.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/javascripts/bootstrap-wysihtml5/core-b3.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/twitter-bootstrap-wizard/jquery.bootstrap.wizard-for.bootstrap3.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/boostrap3-typeahead/bootstrap3-typeahead.min.js"></script>
+    </body>
+</html>
+<script>
+		function myFunction(id){
+			if($('#odds_'+id).val()== ''){
+			    alert('请输入赔率');
+				return false;
+			 }else if($('#max_moeny_'+id).val()== ''){
+			    alert('请输入金额');
+				return false;
+			 }
+		
+		
+			var t = $('#form_'+id).serialize();
+			var url = "{:U('Market/save_odd_score')}";
+			var data = {data:t};
+			$.post(url,data,function(msg){
+			  if(msg==1){
+				alert('修改成功');
+				history.go(0);
+			  }else if(msg==2){
+				alert('非法操作,请检查');
+			  }else if(msg==3){
+				alert('请不要重复操作');
+				history.go(0);
+			  }else{
+				alert('操作错误');
+			  }
+			})
+		}	
+
+
+		function select(id){
+		     if($('#'+id).val()==2){
+			    $('#b_title').text('总球数');
+			    $('#'+id+'_z').hide();
+			    $('#'+id+'_b').show();	
+			 }else{
+			    $('#b_title').text('比分');
+			    $('#'+id+'_z').show();
+			    $('#'+id+'_b').hide();	
+			 }			 
+		
+		}
+		
+		function add_ajax(id){
+		    if(isNaN($('#'+id).val())){
+			    alert('请选择类型');
+				return false;
+			 }else if($('#odds_'+id).val()== ''){
+			    alert('请输入赔率');
+				return false;
+			 }else if($('#max_moeny_'+id).val()== ''){
+			    alert('请输入金额');
+				return false;
+			 }
+		
+		
+		   var t = $('#form_'+id).serialize();
+		   var url = "{:U('Market/set_odd_score')}";
+		   var data = {data:t};
+		   $.post(url,data,function(msg){
+		      if(msg==1){
+				alert('添加成功');
+				history.go(0);
+			  }else if(msg==2){
+				alert('添加失败，请检查');
+			  }else if(msg==3){
+				alert('已经设置过了！请不要重复操作');
+				history.go(0);
+			  }else{
+				alert('操作错误');
+			  }
+		   })
+		   
+		}
+</script>

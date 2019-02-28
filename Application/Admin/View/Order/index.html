@@ -1,0 +1,301 @@
+<extend name="Public/index" />
+
+
+<block name="container">
+
+ <script src="__COMMON__/laydate/laydate.js" ></script>
+ <div class="error">
+			<span></span>
+		</div>
+		<!--遮罩-->
+		<div class="hide"></div>
+ <style>
+	.count_table{display:none;}
+	.hide{
+		background: #000;
+		opacity: 0.4;
+		z-index: 8;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		display: none;
+	}
+	.error{
+		position: absolute;
+		top: 100%;
+		height: auto;
+		width: 100%;
+		text-align: center;
+		display: none;
+		z-index: 202;
+	}
+	.error span{
+		color: #DBDBDB;
+		background:#000;
+		border-radius: 4px;
+		margin: 15px;
+		padding: 15px;
+		opacity: 0.8;
+		font-size: 1.4rem;
+	}
+</style>
+	<div class="col-md-10" >
+	<!-- <div class="row"> -->
+	<!-- <div class="alert alert-success bootstrap-admin-alert"> -->
+	<!-- <button type="button" class="close" data-dismiss="alert">×</button> -->
+	<!-- <h4>成功</h4> -->
+	<!-- 这里是操作成功提示信息！ -->
+	<!-- </div> -->
+	<!-- </div> -->
+		
+	<include file="order_select"/>	
+		
+	<div class="row" style="display:none;">
+		<div class="panel panel-default bootstrap-admin-no-table-panel">
+			<div class="panel-heading">
+				<div class="text-muted bootstrap-admin-box-title">订单统计</div>
+                <div class="pull-right"><span class="badge" onclick="$('.order_list').toggle();"><i class="glyphicon glyphicon-list"></i></span></div>
+			</div>
+			<div class="bootstrap-admin-panel-content bootstrap-admin-no-table-panel-content collapse in order_list">
+				<div class="col-md-2">
+					<div class="easyPieChart" data-percent="100" style="width: 110px; height: 110px; line-height: 110px;">100%<canvas width="110" height="110"></canvas></div>
+					<div class="chart-bottom-heading"><span class="label label-info">订单总量</span></div>
+				</div>
+				<div class="col-md-2">
+					<div class="easyPieChart" data-percent="53" style="width: 110px; height: 110px; line-height: 110px;">53%<canvas width="110" height="110"></canvas></div>
+					<div class="chart-bottom-heading"><span class="label label-info">支付宝订单</span></div>
+				</div>
+				<div class="col-md-2">
+					<div class="easyPieChart" data-percent="83" style="width: 110px; height: 110px; line-height: 110px;">83%<canvas width="110" height="110"></canvas></div>
+					<div class="chart-bottom-heading"><span class="label label-info">QQ订单</span></div>
+				</div>
+			
+				<div class="col-md-2">
+					<div class="easyPieChart" data-percent="100" style="width: 110px; height: 110px; line-height: 110px;">100%<canvas width="110" height="110"></canvas></div>
+					<div class="chart-bottom-heading"><span class="label label-info">订单总额</span></div>
+				</div>
+				<div class="col-md-2">
+					<div class="easyPieChart" data-percent="53" style="width: 110px; height: 110px; line-height: 110px;">53%<canvas width="110" height="110"></canvas></div>
+					<div class="chart-bottom-heading"><span class="label label-info">支付宝总额</span></div>
+				</div>
+				<div class="col-md-2">
+					<div class="easyPieChart" data-percent="83" style="width: 110px; height: 110px; line-height: 110px;">83%<canvas width="110" height="110"></canvas></div>
+					<div class="chart-bottom-heading"><span class="label label-info">QQ总额</span></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>		
+	
+		<div id='list_div'>	
+			
+			<include file="pay_list"/>
+			
+		</div>
+	<if condition="$is_export">
+		<div class='form-group'>	
+			<p>仅用于提交未完成提现订单</p>
+			<button type="button" data-type='export_checked' class="btn tooltip-right btn-primary export_button">提交勾选</button>
+			<button type="button" data-type='exportallorder' class="btn tooltip-right btn-success export_button">提交全部未完成</button>
+		</div>	
+	</if>
+	</div>
+	<script>
+		var Url = "<?=U("",(array)$param)?>",
+			Param_arr = ['state','start_time','end_time'],
+			Param   = {refresh:"refresh",state:"all_list"};
+		$(document).ready(function(){
+			$("#button_operate button").click(function(){
+				$("#button_operate button").removeClass("btn-primary");
+				$(this).addClass("btn-primary");
+				ajax_get_info_list("state",$(this).attr("data-con"));
+			});
+			$("#select01").change(function(){
+				ajax_get_info_list("pay_method",$("#select01").val());
+			});			
+			/*			
+			$("#check_box").on("click",function(){	
+				var is_checked = document.getElementById('check_box').checked;	
+				if( is_checked == true){					
+					console.log(is_checked);				
+					$("input[type='checkbox']").checked = true;	
+				}else{				
+					$("input[type='checkbox']").checked = false;	
+				}				
+			});		
+			*/					
+			$("#check_box").click(function(){	
+				var is_checked = document.getElementById('check_box').checked;	
+				var _input_checked = document.getElementsByClassName("_checkbox");	
+					
+				for(var i=0;i<_input_checked.length;i++){   			
+					_input_checked[i].checked = is_checked;   			
+				}	
+			});			
+			$(".export_button").click(function(){
+				var data_type = $(this).attr("data-type");
+				var _param_json = {};
+					for(var _pa in Param){
+						_param_json[_pa] = Param[_pa];
+					}
+						_param_json.is_export = true;
+						
+				if(data_type == 'export_checked'){
+					var export_id_arr = new Array(),
+					    _is_check_obj = $("input[name='is_check[]']"),
+					    export_id_len = _is_check_obj.length;
+					for(var i=0; i<export_id_len ; i++){
+						if(_is_check_obj[i].checked){
+							export_id_arr.push(_is_check_obj[i].value);
+						}
+					}
+					_param_json.export_id = export_id_arr;
+					if(export_id_arr.length>0){
+						ajax_get_info_list("state","not_comp",_param_json,"location");
+					}
+				}
+				
+				if(data_type == 'exportallorder'){
+					ajax_get_info_list("state","not_comp",_param_json,"location");
+				}
+			})
+		});
+		
+		function ajax_get_info_list( _param , _value ,Param_json=Param ,quest){
+			
+			Param_json[_param] = _value;
+		
+			do_ajax_op(Url , Param_json,quest, info_list_call_back , "get");
+			
+		}
+		
+		function back_money(_order,_order_num,order_record){
+			
+			var _url = "{:U('back_money')}";
+			var _json  = {
+				order_id  : _order,
+				order_num : _order_num,
+				order_record : order_record,
+			}
+			
+			do_ajax_op(_url , _json,"ajax", do_messege );
+			
+		}
+		
+		function refresh_order(_order,_order_num,order_record){
+			 
+			var _url = "{:U('refresh_order')}";
+			var _json  = {
+				order_id  : _order,
+				order_num : _order_num,
+				order_record : order_record,
+			}
+			
+			do_ajax_op(_url , _json,"ajax", do_messege );
+			
+		}
+		
+		function do_messege (res,time=2000){
+			
+			if(res.status == 1){
+				$('#'+res.order_num).remove();
+			}
+			
+			$(".error span").text(res.message);
+			$(".error").show();
+			$(".error").animate({top:'70%'},200);   
+			setTimeout(function(){
+				$(".error").hide();
+				$(".error").stop().css({"top":"100%"});
+			},1500)  
+			
+		}
+		
+		function info_list_call_back(data){
+		
+			if(data.status == "ok"){
+				var _obj  = document.getElementById("list_div");
+			
+				_obj.innerHTML = data.inner_html;
+			}else{
+				// Show ErrorMessage
+				
+			}
+			
+			
+		}
+		
+		function do_ajax_op(Url , Param ,request='ajax' ,call_back, type='post',data_type='JSON'){
+			
+			if(request =='ajax'){
+				$.ajax({
+				  type: type,
+				  url: Url,
+				  data: Param,
+				  success: function (data){ 	
+					call_back(data)
+				  },
+				  dataType: data_type
+				});
+			}
+			
+			if(request =='location'){
+				
+				var _url_encode = '';
+				for(var i in Param){
+					_url_encode += i + '=' + Param[i] + "&";
+				}
+				Url  +=  "?" + _url_encode
+				
+				window.location = Url;
+				
+			}
+		}
+		
+		var start = {
+		  elem: '#start',
+		  format: 'YYYY/MM/DD hh:mm:ss',
+		  min: '1099-06-16 23:59:59', //设定最小日期为当前日期
+		  max: '2199-06-16 23:59:59', //最大日期
+		  istime: true,
+		  istoday: false,
+		  choose: function(datas){
+			 end.min = datas; //开始日选好后，重置结束日的最小日期
+			 end.start = datas; //将结束日的初始值设定为开始日
+			 ajax_get_info_list("start_time",datas);
+		  }
+		};
+		var end = {
+		  elem: '#end',
+		  format: 'YYYY/MM/DD hh:mm:ss',
+		  min: '1099-06-16 23:59:59',
+		  max: '2199-06-16 23:59:59',
+		  istime: true,
+		  istoday: false,
+		  choose: function(datas){
+			start.max = datas; //结束日选好后，重置开始日的最大日期
+			ajax_get_info_list("end_time",datas);
+		  }
+		};
+		laydate(start);
+		laydate(end);
+		
+		
+		//提现取消
+		function extract(fix,id,order_num,cases){ 
+		   var url = "{:U('Order/extract')}";
+		   var data = {fix:fix,id:id,order_num:order_num,cases:cases};
+		   $.post(url,data,function(d){
+                object = $.parseJSON(d);
+				if(object.state==1){
+				    $('#'+order_num).remove();
+				}
+				alert(object.content);
+		   })
+		}
+		
+	</script>
+	
+</block>

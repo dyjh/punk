@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>设置比分&赔率</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="__THEME__/viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Bootstrap -->
+        <link href="__THEME__/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+
+        <!-- Bootstrap Admin Theme -->
+        <link href="__THEME__/css/bootstrap-admin-theme.css" rel="stylesheet" media="screen">
+
+        <!-- Datatables -->
+        <link href="__THEME__/css/DT_bootstrap.css" rel="stylesheet" media="screen">
+
+		
+		
+        <!-- Vendors -->
+        <link href="__THEME__/vendors/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/datepicker.fixes.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/vendors/uniform/themes/default/css/uniform.default.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/css/uniform.default.fixes.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/vendors/chosen.min.css" rel="stylesheet" media="screen">
+        <link href="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/stylesheets/bootstrap-wysihtml5/core-b3.css" rel="stylesheet" media="screen">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+           <script type="text/javascript" src="js/html5shiv.js"></script>
+           <script type="text/javascript" src="js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="bootstrap-admin-with-small-navbar">
+       <div class="container">
+            <!-- left, vertical navbar & content -->
+            <div class="row">
+                <!-- left, vertical navbar -->
+                <include file="Public/nav" />
+
+            <!-- left, vertical navbar & content -->
+            <div class="row">
+                <!-- left, vertical navbar -->
+            <include file="Public/left" /> 
+			 
+			<block name="container"></block>
+
+
+       
+
+                <!-- content -->
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="panel panel-default bootstrap-admin-no-table-panel">
+                            <div class="panel-heading">
+                                <div class="text-muted bootstrap-admin-box-title">基本信息</div>
+                            </div>
+                            <div class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
+                                <form class="form-horizontal">
+                                    <fieldset>
+                                        <legend><span style="color:red;">{$res.team_first}(主)</span> VS <span style="color:green;">{$res.team_second}</span>
+										<h5>场次标识：{$res.id} </h5>
+										<h5>所属联赛：{$res.area}</h5>
+										<h5>开场时间：{$res.time|date='Y-m-d H:i:s',###}</h5>
+										</legend>
+										<h5>
+										<a href="{:U('Market/ttp',array('id'=>$res['id'],'type'=>0))}" class="btn btn-sm btn-success" style="margin-right:15px;">全场</a>
+										<a href="{:U('Market/ttp',array('id'=>$res['id'],'type'=>1))}" class="btn btn-sm btn-danger" style="margin-right:15px;">半场</a>
+										<a onclick='delGoods({$res.id})' class="btn btn-sm btn-success">提交生效</a>
+										</h5>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="panel panel-default bootstrap-admin-no-table-panel">
+                            <div class="panel-heading">
+                                <div class="text-muted bootstrap-admin-box-title">团队列表</div>
+                            </div>
+                            <div class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
+                                <div id="rootwizard">
+                                    <div class="navbar">
+                                        <div class="container">
+                                            <ul>
+                                                <li><a href="#tab1" data-toggle="tab">全场</a></li>
+                                                <li><a href="{:U('Market/team_score_2',array('id'=>$res['id']))}" >半场</a></li>
+                                                <li><a href="{:U('Market/team_score_3',array('id'=>$res['id']))}" >进球数</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="tab-content">
+									
+									
+                                        <div class="tab-pane" id="tab1">
+										<form class="form-horizontal" method="post" action="{:U('Market/team_score')}" >
+                                            <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">场次</th>
+                                            <th style="text-align:center;">类型</th>
+                                            <th style="text-align:center;">比分</th>
+                                            <th style="text-align:center;">赔率 %</th>
+                                            <th style="text-align:center;">最大金额</th>
+                                            <th style="text-align:center;">设置状态</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+									<volist name='score' id='sc'>
+                                        <tr class="odd gradeX">
+                                            <td style="line-height:250%;text-align:center;">{$res.id}</td>
+                                            <td style="line-height:250%;text-align:center;color:red;">全场比分</td>
+                                            <td style="line-height:250%;text-align:center;">{$sc.score}</td>
+											<if condition="$sc['score'] eq $odd[$sc['score']]['score']">
+												<td style="line-height:250%;text-align:center;"><input type="text" style="width:50px;text-align:center" value="{$odd[$sc['score']]['odds']*100}" disabled="disabled"></td>
+												<td style="line-height:250%;text-align:center;"><input type="text" style="width:100px;text-align:center" value="{$odd[$sc['score']]['max_money']}" disabled="disabled"></td>
+                                            <td style="line-height:250%;text-align:center;color:red;">比分已设置</td>
+											<else/>
+											<td style="line-height:250%;text-align:center;"><input type="text" style="width:50px;text-align:center" id='odds_{$re.id}' name='odds[]' value="" placeholder='0'></td>
+											<td style="line-height:250%;text-align:center;"><input type="text" style="width:80px;text-align:center" id='max_moeny_{$re.id}' name='max_money[]' value="" placeholder='0' maxlength='10'></td>
+											<input type="hidden" name="score[]" value="{$sc.score}">
+                                            <td style="line-height:250%;text-align:center;color:green;">正常</td>
+											</if>
+                                            
+                                        </tr>
+									</volist>
+										<tr>
+										<input type="hidden" name="type" value="0">
+										<input type="hidden" name="id" value="{$res.id}">
+
+                                        <td style="line-height:250%;text-align:center;">
+										<button type="submit" class="btn btn-primary">提  交</button>
+										</td>
+
+                                        <td style="line-height:250%;text-align:center;"><button type="reset" onclick="javascript:history.back(-1);"  class="btn btn-default">上一页</button></td>
+										</tr>
+                                    </tbody>
+										</table>
+										</form>
+                                        </div>
+										
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="__THEME__/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="__THEME__/js/twitter-bootstrap-hover-dropdown.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/uniform/jquery.uniform.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/chosen.jquery.min.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/javascripts/bootstrap-wysihtml5/wysihtml5.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/javascripts/bootstrap-wysihtml5/core-b3.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/twitter-bootstrap-wizard/jquery.bootstrap.wizard-for.bootstrap3.js"></script>
+        <script type="text/javascript" src="__THEME__/vendors/boostrap3-typeahead/bootstrap3-typeahead.min.js"></script>
+		
+        <script type="text/javascript" src="__THEME__/vendors/datatables/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="__THEME__/js/DT_bootstrap.js"></script>
+
+        <script type="text/javascript">
+		
+		function delGoods(goodsID) {
+
+      if(confirm( "赔率设置好了吗?确定要开放比赛？" )==true)
+		{
+
+          $.ajax({
+              type: 'POST',
+
+              url: "{:U('Market/set_odd_ajax')}",
+
+              data: {active_id:goodsID},
+
+              success:function(data){
+                  if(data==1){
+					alert("比赛开放成功");
+					//window.location.href="{:U('Market/odd_list')}/id/"+goodsID;
+					history.back();
+                  }else if(data==2){
+					alert("开放失败");
+					history.go(0);
+				  }else if(data==3){
+					alert("比赛已经开放了，不要重复操作");
+					history.go(0);
+				  }else if(data==99){
+					alert("标识不能为空");
+					history.go(0);
+				  }else{
+                      alert(data);
+                  }
+                },
+
+              dataType: "text",
+
+            });
+      }
+     }
+		
+		
+            $(function() {
+                $('.datepicker').datepicker();
+                $('.uniform_on').uniform();
+                $('.chzn-select').chosen();
+                $('.textarea-wysihtml5').wysihtml5({
+                    stylesheets: [
+                        'vendors/bootstrap-wysihtml5-rails-b3/vendor/assets/stylesheets/bootstrap-wysihtml5/wysiwyg-color.css'
+                    ]
+                });
+
+                $('#rootwizard').bootstrapWizard({
+                    'nextSelector': '.next',
+                    'previousSelector': '.previous',
+                    onNext: function(tab, navigation, index) {
+                        var $total = navigation.find('li').length;
+                        var $current = index + 1;
+                        var $percent = ($current / $total) * 100;
+                        $('#rootwizard').find('.progress-bar').css('width', $percent + '%');
+                        // If it's the last tab then hide the last button and show the finish instead
+                        if ($current >= $total) {
+                            $('#rootwizard').find('.pager .next').hide();
+                            $('#rootwizard').find('.pager .finish').show();
+                            $('#rootwizard').find('.pager .finish').removeClass('disabled');
+                        } else {
+                            $('#rootwizard').find('.pager .next').show();
+                            $('#rootwizard').find('.pager .finish').hide();
+                        }
+                    },
+                    onPrevious: function(tab, navigation, index) {
+                        var $total = navigation.find('li').length;
+                        var $current = index + 1;
+                        var $percent = ($current / $total) * 100;
+                        $('#rootwizard').find('.progress-bar').css('width', $percent + '%');
+                        // If it's the last tab then hide the last button and show the finish instead
+                        if ($current >= $total) {
+                            $('#rootwizard').find('.pager .next').hide();
+                            $('#rootwizard').find('.pager .finish').show();
+                            $('#rootwizard').find('.pager .finish').removeClass('disabled');
+                        } else {
+                            $('#rootwizard').find('.pager .next').show();
+                            $('#rootwizard').find('.pager .finish').hide();
+                        }
+                    },
+                    onTabShow: function(tab, navigation, index) {
+                        var $total = navigation.find('li').length;
+                        var $current = index + 1;
+                        var $percent = ($current / $total) * 100;
+                        $('#rootwizard').find('.bar').css({width: $percent + '%'});
+                    }
+                });
+                $('#rootwizard .finish').click(function() {
+                    alert('Finished!, Starting over!');
+                    $('#rootwizard').find('a[href*=\'tab1\']').trigger('click');
+                });
+            });
+        </script>
+    </body>
+</html>
